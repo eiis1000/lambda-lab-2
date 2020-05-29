@@ -2,8 +2,13 @@ package core;
 
 public class Variable implements Expression {
 
-	private String name;
-	private int boundHash;
+	private final String name;
+	private final int boundHash;
+
+	public Variable(String name, int boundHash) {
+		this.name = name;
+		this.boundHash = boundHash;
+	}
 
 	public Expression substitute(Variable variable, Expression expression) {
 		if (this.equals(variable))
@@ -21,6 +26,10 @@ public class Variable implements Expression {
 
 	public int hashCode() {
 		return name.hashCode() + Integer.hashCode(boundHash);
+	}
+
+	public String toString() {
+		return name;
 	}
 
 }
