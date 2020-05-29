@@ -13,8 +13,8 @@ public class Variable implements Expression {
 	}
 
 	public boolean equals(Object that) {
-		if (that instanceof Variable)
-			return name.equals(((Variable) that).name) && boundHash == ((Variable) that).boundHash;
+		if (that instanceof Variable var)
+			return name.equals(var.name) && boundHash == var.boundHash;
 		else
 			return false;
 	}
