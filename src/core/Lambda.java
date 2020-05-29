@@ -1,7 +1,11 @@
 package core;
 
 public class Lambda {
-	public Expression executeWith(Expression expression) {
-		throw new UnsupportedOperationException("oh no");
+
+	private Variable boundVariable;
+	private Expression innerExpression;
+
+	public Expression executeWith(Expression toSubstitute) {
+		return innerExpression.substitute(boundVariable, toSubstitute);
 	}
 }
