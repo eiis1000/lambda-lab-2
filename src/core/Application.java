@@ -22,6 +22,17 @@ public class Application implements Expression {
         return new Application(left.substitute(variable, expression), right.substitute(variable, expression)).execute();
     }
 
+    public boolean equals(Object that) {
+        if (that instanceof Application application)
+            return left.equals(application.left) && right.equals(application.right);
+        else
+            return false;
+    }
+
+    public int hashCode() {
+        return "application".hashCode() + 3 * left.hashCode() + 31 * right.hashCode();
+    }
+
     public String toString() {
         return "(" + left + " " + right + ")";
     }

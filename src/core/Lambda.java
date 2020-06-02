@@ -34,7 +34,7 @@ public class Lambda implements Expression {
 	}
 
 	public int hashCode() {
-		return 7 + innerExpression.hashCode() + 31 * boundVariable.hashCode();
+		return "lambda".hashCode() + 3 * innerExpression.hashCode() + 31 * boundVariable.hashCode();
 	}
 
 	public String toString() {
