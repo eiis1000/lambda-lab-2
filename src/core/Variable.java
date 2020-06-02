@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Set;
+
 public class Variable implements Expression {
 
 	protected final String name;
@@ -15,6 +17,10 @@ public class Variable implements Expression {
 			return expression;
 		else
 			return this;
+	}
+
+	public void getAllVariables(Set<Variable> variables) {
+		variables.add(this);
 	}
 
 	public boolean equals(Object that) {

@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Set;
+
 public class Application implements Expression {
 
     protected final Expression left;
@@ -20,6 +22,11 @@ public class Application implements Expression {
 
     public Expression substitute(Variable variable, Expression expression) {
         return new Application(left.substitute(variable, expression), right.substitute(variable, expression)).execute();
+    }
+
+    public void getAllVariables(Set<Variable> variables) {
+        left.getAllVariables(variables);
+        right.getAllVariables(variables);
     }
 
     public boolean equals(Object that) {

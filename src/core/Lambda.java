@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Set;
+
 public class Lambda implements Expression {
 
 	protected final Variable boundVariable;
@@ -24,6 +26,11 @@ public class Lambda implements Expression {
 	public Lambda alphaConvert(Variable variable) {
 		Variable newBound = new Variable(variable.toString() + "1", hashCode());
 		return new Lambda(newBound, innerExpression.substitute(variable, newBound));
+	}
+
+	public void getAllVariables(Set<Variable> variables) {
+		variables.add(boundVariable);
+		innerExpression.getAllVariables(variables);
 	}
 
 	public boolean equals(Object that) { // TODO \x.x and \y.y
