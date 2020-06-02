@@ -10,23 +10,16 @@ public class Application implements Expression {
     }
 
     public Expression execute() {
-        if(left instanceof Lambda) {
-            return ((Lambda) left).executeWith(right);
-        }
-        else {
+        if (left instanceof Lambda lambda) {
+            return lambda.executeWith(right);
+        } else {
             return this;
         }
 
     }
 
     public Expression substitute(Variable variable, Expression expression) {
-        if (left instanceof Application) {
-            return new Application((left).substitute(variable, expression), right);
-        }
-        else {
-            return this;
-        }
-
+        return new Application(left.substitute(variable, expression), right.substitute(variable, expression)).execute();
     }
 
     public String toString() {
