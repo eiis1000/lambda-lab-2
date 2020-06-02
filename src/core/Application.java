@@ -30,7 +30,7 @@ public class Application implements Expression {
     }
 
     public int hashCode() {
-        return "application".hashCode() + 3 * left.hashCode() + 31 * right.hashCode();
+        return getClass().hashCode() + 3 * left.hashCode() + 31 * right.hashCode();
     }
 
     public String toString() {

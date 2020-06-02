@@ -25,7 +25,7 @@ public class Variable implements Expression {
 	}
 
 	public int hashCode() {
-		return name.hashCode() + Integer.hashCode(boundHash);
+		return getClass().hashCode() + 3 * name.hashCode() + 31 * Integer.hashCode(boundHash);
 	}
 
 	public String toString() {
