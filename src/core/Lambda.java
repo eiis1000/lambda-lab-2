@@ -26,7 +26,7 @@ public class Lambda implements Expression {
 		return new Lambda(newBound, innerExpression.substitute(variable, newBound));
 	}
 
-	public boolean equals(Object that) {
+	public boolean equals(Object that) { // TODO \x.x and \y.y
 		if (that instanceof Lambda lambda)
 			return boundVariable.equals(lambda.boundVariable) && innerExpression.equals(lambda.innerExpression);
 		else
