@@ -19,8 +19,13 @@ public class Application implements Expression {
 
     }
 
-    public Expression substitute(Expression left, Expression right) {
-        if (left.equals(this.left) )
+    public Expression substitute(Variable variable, Expression expression) {
+        if (left instanceof Application) {
+            return new Application((left).substitute(variable, expression), right);
+        }
+        else {
+            return this;
+        }
 
     }
 
