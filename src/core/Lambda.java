@@ -25,4 +25,19 @@ public class Lambda implements Expression {
 		Variable newBound = new Variable(variable.toString() + "1", hashCode());
 		return new Lambda(newBound, innerExpression.substitute(variable, newBound));
 	}
+
+	public boolean equals(Object that) {
+		if (that instanceof Lambda lambda)
+			return boundVariable.equals(lambda.boundVariable) && innerExpression.equals(lambda.innerExpression);
+		else
+			return false;
+	}
+
+	public int hashCode() {
+		return 7 + innerExpression.hashCode() + 31 * boundVariable.hashCode();
+	}
+
+	public String toString() {
+		return "λ" + boundVariable + "." + innerExpression;
+	}
 }
