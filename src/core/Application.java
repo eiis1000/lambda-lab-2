@@ -16,7 +16,6 @@ public class Application implements Expression {
         } else {
             return this;
         }
-
     }
 
     public Expression substitute(Variable variable, Expression expression) {
