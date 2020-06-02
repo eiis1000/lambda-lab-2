@@ -1,8 +1,9 @@
 package core;
 
 public class Application implements Expression {
-    public final Expression left;
-    public final Expression right;
+
+    protected final Expression left;
+    protected final Expression right;
 
     public Application(Expression left, Expression right) {
         this.left = left;

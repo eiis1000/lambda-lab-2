@@ -2,8 +2,8 @@ package core;
 
 public class Variable implements Expression {
 
-	private final String name;
-	private final int boundHash;
+	protected final String name;
+	protected final int boundHash;
 
 	public Variable(String name, int boundHash) {
 		this.name = name;

@@ -2,8 +2,8 @@ package core;
 
 public class Lambda implements Expression {
 
-	private final Variable boundVariable;
-	private final Expression innerExpression;
+	protected final Variable boundVariable;
+	protected final Expression innerExpression;
 
 	public Lambda(Variable boundVariable, Expression innerExpression) {
 		this.boundVariable = boundVariable;
