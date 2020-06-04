@@ -17,42 +17,48 @@ public class ParsingTest {
 	}
 
 	@Test
-	public void parser1() {
+	public void parser1SingleVar() {
 		assertEquals("x", LambdaParser.parseExpression("x").toString());
 	}
 
 	@Test
-	public void parser2() {
+	public void parser2OneApp() {
 		assertEquals("(a b)", LambdaParser.parseExpression("a b").toString());
 	}
 
 	@Test
-	public void parser3() {
+	public void parser3BasicParens() {
 		assertEquals("((a b) c)", LambdaParser.parseExpression("a b c").toString());
 	}
 
 	@Test
-	public void parser4() {
+	public void parser4IdentityLambda() {
 		assertEquals("λx.x", LambdaParser.parseExpression("\\x.x").toString());
 	}
 
 	@Test
-	public void parser5() {
+	public void parser5LeftAsst() {
 		assertEquals("((a b) c)", LambdaParser.parseExpression("((a b) c)").toString());
 	}
 
 	@Test
-	public void parser5b() {
+	public void parser5bLeftAsst() {
 		assertEquals("((a b) c)", LambdaParser.parseExpression("(a b) c").toString());
 	}
 
 	@Test
-	public void parser6() {
+	public void parser6RightAsst() {
 		assertEquals("(a (b c))", LambdaParser.parseExpression("" + "(a (b c))").toString());
 	}
 
 	@Test
-	public void parser6b() {
+	public void parser6bRightAsst() {
 		assertEquals("(a (b c))", LambdaParser.parseExpression("a (b c)").toString());
 	}
+
+	@Test
+	public void parser7MoreComplex() {
+		assertEquals("((a (b λx.x)) c)", LambdaParser.parseExpression("a (b \\x.x) c").toString());
+	}
+
 }
