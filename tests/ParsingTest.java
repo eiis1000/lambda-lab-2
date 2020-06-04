@@ -34,7 +34,7 @@ public class ParsingTest {
 
     @Test
     public void parser4IdentityLambda() {
-        assertEquals("λx.x", LambdaParser.parseExpression("\\x.x").toString());
+        assertEquals("(λx.x)", LambdaParser.parseExpression("\\x.x").toString());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ParsingTest {
 
     @Test
     public void parser7MoreComplex() {
-        assertEquals("((a (b λx.x)) c)", LambdaParser.parseExpression("a (b \\x.x) c").toString());
+        assertEquals("((a (b (λx.x))) c)", LambdaParser.parseExpression("a (b \\x.x) c").toString());
     }
 
     @Test
@@ -83,5 +83,6 @@ public class ParsingTest {
         assertEquals("(λf.(f x))", LambdaParser.parseExpression("λf.(f x)").toString());
         assertEquals("(λf.(f x))", LambdaParser.parseExpression("      (λf.(f x))").toString());
     }
+
 
 }
