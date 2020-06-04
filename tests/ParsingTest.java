@@ -4,6 +4,7 @@ import core.Variable;
 import org.junit.Test;
 import parsing.LambdaParser;
 
+import java.awt.*;
 import java.util.Arrays;
 
 import static junit.framework.TestCase.assertEquals;
@@ -59,6 +60,22 @@ public class ParsingTest {
 	@Test
 	public void parser7MoreComplex() {
 		assertEquals("((a (b λx.x)) c)", LambdaParser.parseExpression("a (b \\x.x) c").toString());
+	}
+
+	public void parser8VarWithSpaces() {
+		assertEquals("cat", LambdaParser.parseExpression("cat       ").toString());
+	}
+
+	public void parser9FunctionSpacing() {
+		assertEquals("(λf.(f x))", LambdaParser.parseExpression("\\f.f x").toString());
+		assertEquals("(λf.(f x))", LambdaParser.parseExpression("\\f .  f x").toString());
+		assertEquals("(λf.(f x))", LambdaParser.parseExpression("  \\f.(f x)").toString());
+		assertEquals("(λf.(f x))", LambdaParser.parseExpression("(λf.(f x))").toString());
+		assertEquals("(λf.(f x))", LambdaParser.parseExpression("λf.f x").toString());
+		assertEquals("(λf.(f x))", LambdaParser.parseExpression("λf   . f x").toString());
+		assertEquals("(λf.(f x))", LambdaParser.parseExpression("λf.(f x)").toString());
+		assertEquals("(λf.(f x))", LambdaParser.parseExpression("      (λf.(f x))").toString());
+		assertEquals("(λf.(f x))", LambdaParser.parseExpression("   \\       f    .    f      x       ").toString());
 	}
 
 }
