@@ -47,7 +47,6 @@ public class LambdaParser {
 					hasOne = true;
 				}
 			}
-			i++;
 		}
 		if (incrementOnEnd)
 			throw new IllegalStateException("Finished parsing tokens " + tokens + " without returning to top of stack, ending at location " + i + "; too many open parentheses.");
@@ -64,7 +63,8 @@ public class LambdaParser {
 			i++;
 			return new Lambda(variableStack.pop(), parseToParen(false));
 		} else {
-			return getVar(tokens.get(i));
+			i++;
+			return getVar(tokens.get(i - 1));
 		}
 	}
 
