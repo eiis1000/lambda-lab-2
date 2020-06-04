@@ -11,6 +11,6 @@ public class CoreTest {
 	public void toStringTest() {
 		assertEquals("x", new Variable("x", 2).toString());
 		assertEquals("(x y)", new Application(new Variable("x", 1), new Variable("y", 3)).toString());
-		assertEquals("λx.y", new Lambda(new Variable("x", 1), new Variable("y", 3)).toString());
+		assertEquals("(λx.y)", new Lambda(new Variable("x", 1), new Variable("y", 3)).toString());
 	}
 }

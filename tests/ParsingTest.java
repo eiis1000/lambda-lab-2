@@ -14,7 +14,7 @@ public class ParsingTest {
 
     @Test
     public void splitterTest() {
-        assertArrayEquals(new String[]{"\\x", "(", "y", "z", ")"}, LambdaParser.splitter.split("\\x.(y z)"));
+        assertArrayEquals(new String[]{"\\", "x", "(", "y", "z", ")"}, LambdaParser.splitter.split("\\x.(y z)"));
     }
 
     @Test

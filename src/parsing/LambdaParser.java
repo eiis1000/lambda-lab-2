@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class LambdaParser {
 
-	public static Pattern splitter = Pattern.compile("\\s+|\\.|(?<!\\s|\\.)((?=\\\\)|(?=[()]))|(?<=[()])(?!=\\s|\\.)");
+	public static Pattern splitter = Pattern.compile("\\s+|\\.|(?<!\\s|\\.)(?=[()\\\\])|(?<=[()\\\\])(?!=\\s|\\.)");
 	private static int i;
 	private static List<String> tokens;
 	private static Deque<Expression> expressionStack;
@@ -21,6 +21,7 @@ public class LambdaParser {
 		tokens = new ArrayList<>(Arrays.asList(splitter.split(input.replace('\u03BB', '\\'))));
 		expressionStack = new LinkedList<>();
 		variableStack = new LinkedList<>();
+		tokens.removeIf(s -> s.length() == 0); // TODO this is a really janky solution to the problem that can be fixed in lvl 2
 		Expression output = parseToParen(false);
 		if (i == tokens.size())
 			return output;
@@ -57,8 +58,9 @@ public class LambdaParser {
 		if ("(".equals(tokens.get(i))) {
 			i++;
 			return parseToParen(true);
-		} else if ('\\' == tokens.get(i).charAt(0)) {
-			variableStack.push(new Variable(tokens.get(i).substring(1), Integer.hashCode(i)));
+		} else if ("\\".equals(tokens.get(i))) {
+			i++;
+			variableStack.push(new Variable(tokens.get(i), Integer.hashCode(i)));
 			i++;
 			return new Lambda(variableStack.pop(), parseToParen(false));
 		} else {
