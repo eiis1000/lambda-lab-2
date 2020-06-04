@@ -15,19 +15,19 @@ public class LambdaParser {
 	private static Deque<Expression> expressionStack;
 	private static Deque<Variable> variableStack;
 
-	public Expression parseExpression(String input) {
+	public static Expression parseExpression(String input) {
 		i = 0;
 		tokens = new ArrayList<>(Arrays.asList(splitter.split(input.replace('\u03BB', '\\'))));
 		expressionStack = new LinkedList<>();
 		variableStack = new LinkedList<>();
-		Expression output = getNext();
+		Expression output = parseToParen(false);
 		if (i == tokens.size())
 			return output;
 		else
 			throw new IllegalStateException("Did not finish parsing " + input + " with tokens " + tokens + " at location " + i + "; too many close parentheses.");
 	}
 
-	public Expression parseToParen(boolean incrementOnEnd) {
+	public static  Expression parseToParen(boolean incrementOnEnd) {
 		boolean hasOne = false;
 //		int curExpStackSize = expressionStack.size();
 		while (i < tokens.size()) {
@@ -54,7 +54,7 @@ public class LambdaParser {
 			return expressionStack.pop();
 	}
 
-	public Expression getNext() {
+	public static Expression getNext() {
 		if ("(".equals(tokens.get(i))) {
 			i++;
 			return parseToParen(true);
@@ -66,7 +66,7 @@ public class LambdaParser {
 		}
 	}
 
-	public Variable getVar(String name) {
+	public static Variable getVar(String name) {
 		Iterator<Variable> iter = variableStack.descendingIterator();
 		Variable toUse = null;
 		while (iter.hasNext()) {
