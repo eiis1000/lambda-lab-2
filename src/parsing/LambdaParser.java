@@ -24,8 +24,10 @@ public class LambdaParser {
 		Expression output = parseToParen(false);
 		if (i == tokens.size())
 			return output;
-		else
+		else if (i < tokens.size())
 			throw new IllegalStateException("Did not finish parsing " + input + " with tokens " + tokens + " at location " + i + "; too many close parentheses.");
+		else
+			throw new IllegalStateException("Parsing has escaped the bounds of the input, indicating an error in the parser. i = " + i + ", tokens.size() = " + tokens.size());
 	}
 
 	public static  Expression parseToParen(boolean incrementOnEnd) {
