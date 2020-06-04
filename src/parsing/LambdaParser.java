@@ -32,10 +32,7 @@ public class LambdaParser {
 		boolean hasOne = false;
 //		int curExpStackSize = expressionStack.size();
 		while (i < tokens.size()) {
-			if ("(".equals(tokens.get(i))) {
-				i++;
-				return getNext();
-			} else if (")".equals(tokens.get(i))) {
+			if (")".equals(tokens.get(i))) {
 				if (incrementOnEnd)
 					i++;
 				return expressionStack.pop();
