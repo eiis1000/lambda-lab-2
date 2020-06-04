@@ -2,6 +2,7 @@ package parsing;
 
 import core.Application;
 import core.Expression;
+import core.Lambda;
 import core.Variable;
 
 import java.util.*;
@@ -60,7 +61,8 @@ public class LambdaParser {
 			return parseToParen(true);
 		} else if ('\\' == tokens.get(i).charAt(0)) {
 			variableStack.push(new Variable(tokens.get(i).substring(1), Integer.hashCode(i)));
-			return parseToParen(false);
+			i++;
+			return new Lambda(variableStack.pop(), parseToParen(false));
 		} else {
 			return getVar(tokens.get(i));
 		}
