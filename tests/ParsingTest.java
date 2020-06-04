@@ -35,4 +35,24 @@ public class ParsingTest {
 	public void parser4() {
 		assertEquals("λx.x", LambdaParser.parseExpression("\\x.x").toString());
 	}
+
+	@Test
+	public void parser5() {
+		assertEquals("((a b) c)", LambdaParser.parseExpression("((a b) c)").toString());
+	}
+
+	@Test
+	public void parser5b() {
+		assertEquals("((a b) c)", LambdaParser.parseExpression("(a b) c").toString());
+	}
+
+	@Test
+	public void parser6() {
+		assertEquals("(a (b c))", LambdaParser.parseExpression("" + "(a (b c))").toString());
+	}
+
+	@Test
+	public void parser6b() {
+		assertEquals("(a (b c))", LambdaParser.parseExpression("a (b c)").toString());
+	}
 }
