@@ -1,14 +1,19 @@
 package parsing;
 
-import core.Application;
 import core.Expression;
 
+import java.io.InputStream;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class CLI {
-	@SuppressWarnings("UnnecessaryContinue")
 	public static void main(String[] args) {
-		Scanner scan = new Scanner(System.in);
+		runCLI(System.in, System.out::println);
+	}
+
+	@SuppressWarnings("UnnecessaryContinue")
+	public static void runCLI(InputStream source, Consumer<Expression> output) {
+		Scanner scan = new Scanner(source);
 		while (true) {
 			System.out.print("> ");
 			String input = scan.nextLine().strip().replaceAll(";.*", "");
@@ -17,7 +22,7 @@ public class CLI {
 			else if (input.length() >= 4 && "exit".equals(input.substring(0, 4)))
 				break;
 			else {
-				System.out.println(parseInput(input));
+				output.accept(parseInput(input));
 			}
 		}
 		System.out.println("Goodbye!");

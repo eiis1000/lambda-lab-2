@@ -2,6 +2,7 @@ import core.Application;
 import core.Lambda;
 import core.Variable;
 import org.junit.Test;
+import parsing.CLI;
 import parsing.LambdaParser;
 
 import java.awt.*;
