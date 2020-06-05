@@ -8,6 +8,8 @@ public class Variable implements Expression {
     protected final int boundHash;
 
     public Variable(String name, int boundHash) {
+        if (name.length() == 0)
+            throw new IllegalArgumentException("Created a variable with an empty name.");
         this.name = name;
         this.boundHash = boundHash;
     }

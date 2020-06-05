@@ -49,7 +49,7 @@ public class ParsingTest {
 
     @Test
     public void parser6RightAsst() {
-        assertEquals("(a (b c))", LambdaParser.parseExpression("" + "(a (b c))").toString());
+        assertEquals("(a (b c))", LambdaParser.parseExpression("(a (b c))").toString());
     }
 
     @Test
