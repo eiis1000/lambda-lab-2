@@ -84,5 +84,15 @@ public class ParsingTest {
         assertEquals("(λf.(f x))", LambdaParser.parseExpression("      (λf.(f x))").toString());
     }
 
+    @Test
+    public void parser10FunctionParens() {
+        assertEquals("((λf.f) x)", LambdaParser.parseExpression("(\\f.f) x").toString());
+        assertEquals("(λa.((((a b) c) d) e))", LambdaParser.parseExpression("\\a.a b c d e").toString());
+        assertEquals("(((λa.a) (λb.b)) c)", LambdaParser.parseExpression("(\\a.a) (\\b.b) c").toString());
+        assertEquals("(((λa.a) (λb.b)) c)", LambdaParser.parseExpression("(\\a.a) (\\b.b) c").toString());
+        assertEquals("(λa.((a (λb.b)) c))", LambdaParser.parseExpression("\\a.a (\\b.b) c").toString());
+        assertEquals("((λa.(a (λb.b))) c)", LambdaParser.parseExpression("(\\a.a \\b.b) c").toString());
+        assertEquals("(λa.(((((a b) c) d) e) (λh.((((f g) h) i) j))))", LambdaParser.parseExpression("\\a.a b c d e \\h. f g h i j").toString());
+    }
 
-}
+
