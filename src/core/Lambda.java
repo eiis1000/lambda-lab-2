@@ -24,7 +24,7 @@ public class Lambda implements Expression {
     }
 
     public Lambda alphaConvert(Variable variable) {
-        Variable newBound = new Variable(variable.toString() + "1", hashCode());
+        Variable newBound = new Variable(variable.toString() + "1");
         return new Lambda(newBound, innerExpression.substitute(variable, newBound));
     }
 

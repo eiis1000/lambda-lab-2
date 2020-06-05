@@ -5,13 +5,11 @@ import java.util.Set;
 public class Variable implements Expression {
 
     protected final String name;
-    protected final int boundHash;
 
-    public Variable(String name, int boundHash) {
+    public Variable(String name) {
         if (name.length() == 0)
             throw new IllegalArgumentException("Created a variable with an empty name.");
         this.name = name;
-        this.boundHash = boundHash;
     }
 
     public Expression substitute(Variable variable, Expression expression) {
@@ -27,13 +25,13 @@ public class Variable implements Expression {
 
     public boolean equals(Object that) {
         if (that instanceof Variable var)
-            return name.equals(var.name) && boundHash == var.boundHash;
+            return name.equals(var.name);
         else
             return false;
     }
 
     public int hashCode() {
-        return getClass().hashCode() + 3 * name.hashCode() + 31 * Integer.hashCode(boundHash);
+        return getClass().hashCode() + 3 * name.hashCode();
     }
 
     public String toString() {

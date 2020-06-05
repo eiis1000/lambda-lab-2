@@ -61,7 +61,7 @@ public class LambdaParser {
 		} else if ("\\".equals(tokens.get(i))) {
 			i++;
 			if (tokens.get(i).length() > 0)
-				variableStack.push(new Variable(tokens.get(i), Integer.hashCode(i)));
+				variableStack.push(new Variable(tokens.get(i)));
 			else
 				throw new IllegalStateException("Tried to create a variable with an empty name. Parsing tokens " + tokens + " at location " + i + ".");
 			i++;
@@ -83,7 +83,7 @@ public class LambdaParser {
 			}
 		}
 		if (toUse == null) {
-			toUse = new Variable(name, Integer.hashCode(i));
+			toUse = new Variable(name);
 //			variableStack.push(toUse);
 		}
 		return toUse;
