@@ -27,11 +27,7 @@ public class CLI {
 	public static Expression parseInput(String input) {
 		String[] spaceSplit = input.split("\\s+", 2);
 		if ("run".equals(spaceSplit[0].strip())) {
-			Expression expression = parseInput(spaceSplit[1].strip());
-			if (expression instanceof Application application)
-				return application.execute();
-			else
-				return expression;
+			return parseInput(spaceSplit[1].strip()).executeAll();
 		} else if (input.indexOf('=') != -1) {
 			// TODO define the thing
 			return null;

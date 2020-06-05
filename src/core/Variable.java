@@ -23,6 +23,10 @@ public class Variable implements Expression {
         variables.add(this);
     }
 
+    public Expression executeAll() {
+        return this;
+    }
+
     public boolean equals(Object that) {
         if (that instanceof Variable var)
             return name.equals(var.name);

@@ -33,6 +33,10 @@ public class Lambda implements Expression {
         innerExpression.getAllVariables(variables);
     }
 
+    public Expression executeAll() {
+        return new Lambda(boundVariable, innerExpression.executeAll());
+    }
+
     public boolean equals(Object that) { // TODO \x.x and \y.y
         if (that instanceof Lambda lambda)
             return boundVariable.equals(lambda.boundVariable) && innerExpression.equals(lambda.innerExpression);
