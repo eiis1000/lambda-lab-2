@@ -1,5 +1,8 @@
 package parsing;
 
+import core.Application;
+import core.Expression;
+
 import java.util.Scanner;
 
 public class CLI {
@@ -15,9 +18,25 @@ public class CLI {
 			else if (input.length() >= 4 && "exit".equals(input.substring(0, 4)))
 				break;
 			else {
-				System.out.println(LambdaParser.parseExpression(input));
+				System.out.println(parseInput(input));
 			}
 		}
 		System.out.println("Goodbye!");
+	}
+
+	public static Expression parseInput(String input) {
+		String[] spaceSplit = input.split("\\s+", 2);
+		if ("run".equals(spaceSplit[0].strip())) {
+			Expression expression = parseInput(spaceSplit[1].strip());
+			if (expression instanceof Application application)
+				return application.execute();
+			else
+				return expression;
+		} else if (input.indexOf('=') != -1) {
+			// TODO define the thing
+			return null;
+		} else {
+			return LambdaParser.parseExpression(input);
+		}
 	}
 }
