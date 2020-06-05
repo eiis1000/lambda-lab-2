@@ -95,4 +95,22 @@ public class ParsingTest {
         assertEquals("(λa.(((((a b) c) d) e) (λh.((((f g) h) i) j))))", LambdaParser.parseExpression("\\a.a b c d e \\h. f g h i j").toString());
     }
 
+    @Test
+    public void parser11VarParens() {
+        assertEquals("a", LambdaParser.parseExpression("(((a)))").toString());
+        assertEquals("(a b)", LambdaParser.parseExpression("(((a))) ((((b))))").toString());
+    }
 
+    @Test
+    public void parser12WhiteSpace() {
+        assertEquals("\n", LambdaParser.parseExpression("\n"));
+        assertEquals(" ", LambdaParser.parseExpression(" "));
+    }
+
+    @Test
+    public void parser13Comments() {
+        assertEquals("\n", LambdaParser.parseExpression("; This comment should do nothing. define run (lambda y. lambda x.(x y)) (x x)").toString());
+        assertEquals("Goodbye!", LambdaParser.parseExpression("exit").toString());
+    }
+
+}
