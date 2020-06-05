@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class CLI {
 	@SuppressWarnings("UnnecessaryContinue")
 	public static void main(String[] args) {
-		System.out.println("Welcome to CASprzak. Run 'help' for a command list, or 'demo' for a tutorial.");
 		Scanner scan = new Scanner(System.in);
 		while (true) {
 			System.out.print("> ");
