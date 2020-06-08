@@ -1,4 +1,5 @@
 import core.Application;
+import core.Expression;
 import core.Lambda;
 import core.Variable;
 import org.junit.Test;
@@ -6,7 +7,9 @@ import parsing.CLI;
 import parsing.LambdaParser;
 
 import java.awt.*;
+import java.io.ByteArrayInputStream;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
@@ -100,6 +103,17 @@ public class ParsingTest {
     public void parser11VarParens() {
         assertEquals("a", LambdaParser.parseExpression("(((a)))").toString());
         assertEquals("(a b)", LambdaParser.parseExpression("(((a))) ((((b))))").toString());
+    }
+
+    @Test
+    public void CLITest1() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                \\x.x
+                exit
+                """.getBytes()), list::add);
+        assertEquals(1, list.size());
+        assertEquals("(λx.x)", list.getFirst().toString());
     }
 
 }
