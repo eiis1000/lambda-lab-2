@@ -9,6 +9,7 @@ import parsing.LambdaParser;
 import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import static junit.framework.TestCase.assertEquals;
@@ -111,7 +112,7 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 \\x.x
                 exit
-                """.getBytes()), list::add);
+                """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
         assertEquals("(λx.x)", list.getFirst().toString());
     }
@@ -122,7 +123,7 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 run cat
                 exit
-                """.getBytes()), list::add);
+                """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
         assertEquals("cat", list.getFirst().toString());
     }
@@ -133,7 +134,7 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 run (x y)
                 exit
-                """.getBytes()), list::add);
+                """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
         assertEquals("(x y)", list.getFirst().toString());
     }
@@ -144,7 +145,7 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 run \\x.x y
                 exit
-                """.getBytes()), list::add);
+                """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
         assertEquals("(λx.(x y))", list.getFirst().toString());
     }
@@ -155,7 +156,7 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 run (\\x . x y) (\\v.v)
                 exit
-                """.getBytes()), list::add);
+                """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
         assertEquals("y", list.getFirst().toString());
     }
@@ -166,7 +167,7 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 run (\\x. x (\\x.x)) y
                 exit
-                """.getBytes()), list::add);
+                """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
         assertEquals("(y (λx.x))", list.getFirst().toString());
     }
@@ -177,7 +178,7 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 run (λy.λx.(x y)) x
                 exit
-                """.getBytes()), list::add);
+                """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
         assertEquals("(λx1.(x1 x))", list.getFirst().toString());
     }
@@ -188,7 +189,7 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 run (λy.λx.(x y)) (x x)
                  exit
-                 """.getBytes()), list::add);
+                 """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
         assertEquals("(λx1.(x1 (x x)))", list.getFirst().toString());
     }

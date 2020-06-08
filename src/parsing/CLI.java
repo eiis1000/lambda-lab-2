@@ -10,13 +10,20 @@ import java.util.function.Consumer;
 
 public class CLI {
 	public static void main(String[] args) {
-		runCLI(System.in, System.out::println);
+		Map<String, Expression> definedExpressions = new HashMap<>();
+		runCLI(
+				System.in,
+				output -> {
+					definedExpressions.put("_", output);
+					System.out.println(output);
+				},
+				definedExpressions
+		);
 	}
 
 	@SuppressWarnings("UnnecessaryContinue")
-	public static void runCLI(InputStream source, Consumer<Expression> output) {
+	public static void runCLI(InputStream source, Consumer<Expression> output, Map<String, Expression> definedExpressions) {
 		Scanner scan = new Scanner(source);
-		Map<String, Expression> definedExpressions = new HashMap<>();
 		while (true) {
 			System.out.print("> ");
 			String input = scan.nextLine().strip().replaceAll(";.*", "");
