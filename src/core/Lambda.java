@@ -1,5 +1,6 @@
 package core;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Lambda implements Expression {
@@ -13,19 +14,24 @@ public class Lambda implements Expression {
     }
 
     public Expression executeWith(Expression toSubstitute) {
-        return innerExpression.substitute(boundVariable, toSubstitute);
+        Set<Variable> toSubstituteVars = new HashSet<>();
+        toSubstitute.getAllVariables(toSubstituteVars);
+        if (toSubstituteVars.contains(boundVariable))
+            return alphaConvert().executeWith(toSubstitute);
+        else
+            return innerExpression.substitute(boundVariable, toSubstitute);
     }
 
     public Expression substitute(Variable variable, Expression expression) {
         if (variable.equals(boundVariable))
-            return alphaConvert(variable).substitute(variable, expression);
+            return alphaConvert().substitute(variable, expression);
         else
             return new Lambda(boundVariable, innerExpression.substitute(variable, expression));
     }
 
-    public Lambda alphaConvert(Variable variable) {
-        Variable newBound = new Variable(variable.toString() + "1");
-        return new Lambda(newBound, innerExpression.substitute(variable, newBound));
+    public Lambda alphaConvert() { // TODO fix stuff like x11111111111
+        Variable newBound = new Variable(boundVariable.toString() + "1");
+        return new Lambda(newBound, innerExpression.substitute(boundVariable, newBound));
     }
 
     public void getAllVariables(Set<Variable> variables) {
