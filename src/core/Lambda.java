@@ -20,6 +20,7 @@ public class Lambda implements Expression {
             return alphaConvert().executeWith(toSubstitute);
         else
             return innerExpression.substitute(boundVariable, toSubstitute);
+//            return new Lambda(boundVariable, innerExpression.substitute(boundVariable, toSubstitute));
     }
 
     public Expression substitute(Variable variable, Expression expression) {
