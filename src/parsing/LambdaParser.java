@@ -17,12 +17,16 @@ public class LambdaParser {
 	private static Deque<Variable> variableStack;
 
 	public static Expression parseExpression(String input) {
+		return parseExpression(input, new HashMap<>());
+	}
+
+	public static Expression parseExpression(String input, Map<String, Expression> definedExpressions) {
 		i = 0;
 		tokens = new ArrayList<>(Arrays.asList(splitter.split(input.replace('\u03BB', '\\'))));
 		tokens.removeIf(s -> s.length() == 0); // TODO this is a really janky solution to the problem that can be fixed in lvl 2
 		expressionStack = new LinkedList<>();
 		variableStack = new LinkedList<>();
-		Expression output = parseToParen(false);
+		Expression output = parseToParen(definedExpressions, false);
 		if (i == tokens.size())
 			return output;
 		else if (i < tokens.size())
@@ -31,7 +35,7 @@ public class LambdaParser {
 			throw new IllegalStateException("Parsing has escaped the bounds of the input, indicating an error in the parser. i = " + i + ", tokens.size() = " + tokens.size());
 	}
 
-	public static  Expression parseToParen(boolean incrementOnEnd) {
+	public static  Expression parseToParen(Map<String, Expression> definedExpressions, boolean incrementOnEnd) {
 		boolean hasOne = false;
 //		int curExpStackSize = expressionStack.size();
 		while (i < tokens.size()) {
@@ -41,9 +45,9 @@ public class LambdaParser {
 				return expressionStack.pop();
 			} else {
 				if (hasOne) {
-					expressionStack.push(new Application(expressionStack.pop(), getNext()));
+					expressionStack.push(new Application(expressionStack.pop(), getNext(definedExpressions)));
 				} else {
-					expressionStack.push(getNext());
+					expressionStack.push(getNext(definedExpressions));
 					hasOne = true;
 				}
 			}
@@ -54,10 +58,10 @@ public class LambdaParser {
 			return expressionStack.pop();
 	}
 
-	public static Expression getNext() {
+	public static Expression getNext(Map<String, Expression> definedExpressions) {
 		if ("(".equals(tokens.get(i))) {
 			i++;
-			return parseToParen(true);
+			return parseToParen(definedExpressions, true);
 		} else if ("\\".equals(tokens.get(i))) {
 			i++;
 			if (tokens.get(i).length() > 0)
@@ -65,14 +69,18 @@ public class LambdaParser {
 			else
 				throw new IllegalStateException("Tried to create a variable with an empty name. Parsing tokens " + tokens + " at location " + i + ".");
 			i++;
-			return new Lambda(variableStack.pop(), parseToParen(false));
+			return new Lambda(variableStack.pop(), parseToParen(definedExpressions, false));
 		} else {
 			i++;
-			return getVar(tokens.get(i - 1));
+			return getVar(tokens.get(i - 1), definedExpressions);
 		}
 	}
 
-	public static Variable getVar(String name) {
+	public static Expression getVar(String name, Map<String, Expression> definedExpressions) {
+		for (Map.Entry<String, Expression> entry : definedExpressions.entrySet())
+			if (entry.getKey().equals(name))
+				return entry.getValue();
+
 		Iterator<Variable> iter = variableStack.descendingIterator();
 		Variable toUse = null;
 		while (iter.hasNext()) {
