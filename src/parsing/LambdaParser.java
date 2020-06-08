@@ -82,10 +82,9 @@ public class LambdaParser {
 				break;
 			}
 		}
-		if (toUse == null) {
-			toUse = new Variable(name);
-//			variableStack.push(toUse);
-		}
-		return toUse;
+		if (toUse == null)
+			return new Variable(name);
+		else
+			return toUse;
 	}
 }
