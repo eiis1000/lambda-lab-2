@@ -1,6 +1,7 @@
 package core;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class Variable implements Expression {
 
@@ -9,6 +10,9 @@ public class Variable implements Expression {
     public Variable(String name) {
         if (name.length() == 0)
             throw new IllegalArgumentException("Created a variable with an empty name.");
+        for (char c : name.toCharArray())
+            if (!Character.isLetterOrDigit(c))
+                throw new IllegalArgumentException("Character names must be alphanumeric.");
         this.name = name;
     }
 
