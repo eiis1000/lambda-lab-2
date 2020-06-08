@@ -14,16 +14,14 @@ public class Lambda implements Expression {
     }
 
     public Expression executeWith(Expression toSubstitute) {
-        Set<Variable> toSubstituteVars = new HashSet<>();
-        toSubstitute.getAllVariables(toSubstituteVars);
-        if (toSubstituteVars.contains(boundVariable))
-            return alphaConvert().executeWith(toSubstitute);
-        else
-            return innerExpression.substitute(boundVariable, toSubstitute);
-//            return new Lambda(boundVariable, innerExpression.substitute(boundVariable, toSubstitute));
+         return innerExpression.substitute(boundVariable, toSubstitute);
     }
 
     public Expression substitute(Variable variable, Expression expression) {
+        Set<Variable> toSubstituteVars = new HashSet<>();
+        expression.getAllVariables(toSubstituteVars); // TODO doing this each time is inefficient
+        if (toSubstituteVars.contains(boundVariable))
+            return alphaConvert().substitute(variable, expression);
         if (variable.equals(boundVariable))
             return alphaConvert().substitute(variable, expression);
         else
