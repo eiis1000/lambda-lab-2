@@ -116,4 +116,80 @@ public class ParsingTest {
         assertEquals("(λx.x)", list.getFirst().toString());
     }
 
+    @Test
+    public void CLITest2() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                run cat
+                exit
+                """.getBytes()), list::add);
+        assertEquals(1, list.size());
+        assertEquals("cat", list.getFirst().toString());
+    }
+
+    @Test
+    public void CLITest3() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                run (x y)
+                exit
+                """.getBytes()), list::add);
+        assertEquals(1, list.size());
+        assertEquals("(x y)", list.getFirst().toString());
+    }
+
+    @Test
+    public void CLITest4() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                run \\x.x y
+                exit
+                """.getBytes()), list::add);
+        assertEquals(1, list.size());
+        assertEquals("y", list.getFirst().toString());
+    }
+
+    @Test
+    public void CLITest5() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                run (\\x . x y) (\\v.v)
+                exit
+                """.getBytes()), list::add);
+        assertEquals(1, list.size());
+        assertEquals("y", list.getFirst().toString());
+    }
+
+    @Test
+    public void CLITest6() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                run (\\x. x (\\x.x)) y
+                exit
+                """.getBytes()), list::add);
+        assertEquals(1, list.size());
+        assertEquals("(y (λx.x))", list.getFirst().toString());
+    }
+
+    @Test
+    public void CLITest7() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                run (λy.λx.(x y)) x
+                exit
+                """.getBytes()), list::add);
+        assertEquals(1, list.size());
+        assertEquals("(λx1.(x1 x))", list.getFirst().toString());
+    }
+
+    @Test
+    public void CLITest8() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                run (λy.λx.(x y)) (x x)
+                 exit
+                 """.getBytes()), list::add);
+        assertEquals(1, list.size());
+        assertEquals("(λx1.(x1 (x x)))", list.getFirst().toString());
+    }
 }
