@@ -146,7 +146,7 @@ public class ParsingTest {
                 exit
                 """.getBytes()), list::add);
         assertEquals(1, list.size());
-        assertEquals("y", list.getFirst().toString());
+        assertEquals("(λx.(x y))", list.getFirst().toString());
     }
 
     @Test
