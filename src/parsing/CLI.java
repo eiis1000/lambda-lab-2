@@ -26,20 +26,20 @@ public class CLI {
 				break;
 			else if (input.contains("=")) {
 				String[] tokens = input.split("\\s*=\\s*", 2);
-				Expression parsed = parseInput(tokens[1]);
+				Expression parsed = parseInput(tokens[1], definedExpressions);
 				definedExpressions.put(tokens[0], parsed);
 				System.out.println("Added " + parsed + " as " + tokens[0]);
 			} else
-				output.accept(parseInput(input));
+				output.accept(parseInput(input, definedExpressions));
 		}
 		System.out.println("Goodbye!");
 	}
 
-	public static Expression parseInput(String input) {
+	public static Expression parseInput(String input, Map<String, Expression> definedExpressions) {
 		String[] spaceSplit = input.split("\\s+", 2);
 		if ("run".equals(spaceSplit[0].strip()))
-			return parseInput(spaceSplit[1].strip()).executeAll();
+			return parseInput(spaceSplit[1].strip(), definedExpressions).executeAll();
 		else
-			return LambdaParser.parseExpression(input);
+			return LambdaParser.parseExpression(input, definedExpressions);
 	}
 }
