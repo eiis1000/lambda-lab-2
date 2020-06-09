@@ -14,7 +14,7 @@ public class Lambda implements Expression {
     }
 
     public Expression executeWith(Expression toSubstitute) {
-         return innerExpression.substitute(boundVariable, toSubstitute);
+        return innerExpression.substitute(boundVariable, toSubstitute);
     }
 
     public Expression substitute(Variable variable, Expression expression) {
@@ -29,7 +29,17 @@ public class Lambda implements Expression {
     }
 
     public Lambda alphaConvert() { // TODO fix stuff like x11111111111
-        Variable newBound = new Variable(boundVariable.toString() + "1");
+        Variable newBound;
+        if (boundVariable.toString().isEmpty())
+            newBound = new Variable("1");
+        else {
+            String[] s = boundVariable.toString().split("(?<!\\d)(?=\\d*$)", 2);
+            if (s[1].length() > 0)
+                newBound = new Variable(s[0] + (Integer.parseInt(s[1]) + 1));
+            else
+                newBound = new Variable(s[0] + "1");
+        }
+
         return new Lambda(newBound, innerExpression.substitute(boundVariable, newBound));
     }
 

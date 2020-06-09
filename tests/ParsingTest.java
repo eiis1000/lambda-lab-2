@@ -166,7 +166,7 @@ public class ParsingTest {
         LinkedList<Expression> list = new LinkedList<>();
         CLI.runCLI(new ByteArrayInputStream("""
                 run (\\x. x (\\x.x)) y
-                exit
+                exitR
                 """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
         assertEquals("(y (λx.x))", list.getFirst().toString());
