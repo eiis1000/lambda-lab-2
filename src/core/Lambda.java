@@ -28,7 +28,7 @@ public class Lambda implements Expression {
             return new Lambda(boundVariable, innerExpression.substitute(variable, expression));
     }
 
-    public Lambda alphaConvert() { // TODO fix stuff like x11111111111
+    public Lambda alphaConvert() {
         Variable newBound;
         if (boundVariable.toString().isEmpty())
             newBound = new Variable("1");
