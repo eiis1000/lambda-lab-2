@@ -12,7 +12,7 @@ public class Variable implements Expression {
             throw new IllegalArgumentException("Created a variable with an empty name.");
         for (char c : name.toCharArray())
             if (!Character.isLetterOrDigit(c))
-                throw new IllegalArgumentException("Character names must be alphanumeric.");
+                throw new IllegalArgumentException("Invalid variable name " + name + ": Variable names must be alphanumeric.");
         this.name = name;
     }
 
