@@ -22,7 +22,7 @@ public class LambdaParser {
 
 	public static Expression parseExpression(String input, Map<String, Expression> definedExpressions) {
 		i = 0;
-		tokens = new ArrayList<>(Arrays.asList(splitter.split(input.replace('\u03BB', '\\'))));
+		tokens = new ArrayList<>(Arrays.asList(splitter.split(input.replace('\u03BB', '\\').replaceAll("\uFEFF", ""))));
 		tokens.removeIf(s -> s.length() == 0); // TODO this is a really janky solution to the problem that can be fixed in lvl 2
 		expressionStack = new LinkedList<>();
 		variableStack = new LinkedList<>();
