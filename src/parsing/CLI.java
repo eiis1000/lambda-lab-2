@@ -33,6 +33,10 @@ public class CLI {
 				break;
 			else if (input.contains("=")) {
 				String[] tokens = input.split("\\s*=\\s*", 2);
+				if (definedExpressions.containsKey(tokens[0])) {
+					System.out.println(tokens[0] + " is already defined.");
+					continue;
+				}
 				Expression parsed = parseInput(tokens[1], definedExpressions);
 				definedExpressions.put(tokens[0], parsed);
 				System.out.println("Added " + parsed + " as " + tokens[0]);
