@@ -1,7 +1,6 @@
 package core;
 
 import java.util.Set;
-import java.util.regex.Pattern;
 
 public class Variable implements Expression {
 
