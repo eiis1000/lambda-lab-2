@@ -38,7 +38,6 @@ public class Lambda implements Expression {
             String[] s = lastNumberSplit.split(boundVariable.toString(), 2);
             if (s.length > 1 && s[1].length() > 0) {
                 newBound = new Variable(s[0] + (Integer.parseInt(s[1]) + 1));
-                System.out.println("hi");
             } else
                 newBound = new Variable(s[0] + "1");
         }
