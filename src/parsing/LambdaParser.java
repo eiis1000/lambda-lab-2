@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class LambdaParser {
 
-	public static Pattern splitter = Pattern.compile("\\s+|\\.|(?<!\\s|\\.)(?=[()\\\\])|(?<=[()\\\\])(?!=\\s|\\.)");
+	public static final Pattern splitter = Pattern.compile("\\s+|\\.|(?<!\\s|\\.)(?=[()\\\\])|(?<=[()\\\\])(?!=\\s|\\.)");
 	private static int i;
 	private static List<String> tokens;
 	private static Deque<Expression> expressionStack;

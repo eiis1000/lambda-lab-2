@@ -2,9 +2,11 @@ package core;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class Lambda implements Expression {
 
+    private final Pattern lastNumberSplit = Pattern.compile("(?<!\\d)(?=\\d*$)");
     protected final Variable boundVariable;
     protected final Expression innerExpression;
 
@@ -33,7 +35,7 @@ public class Lambda implements Expression {
         if (boundVariable.toString().isEmpty())
             newBound = new Variable("1");
         else {
-            String[] s = boundVariable.toString().split("(?<!\\d)(?=\\d*$)", 2);
+            String[] s = lastNumberSplit.split(boundVariable.toString(), 2);
             if (s[1].length() > 0)
                 newBound = new Variable(s[0] + (Integer.parseInt(s[1]) + 1));
             else
