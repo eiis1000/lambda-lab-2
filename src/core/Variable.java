@@ -7,7 +7,7 @@ public class Variable implements Expression {
     protected final String name;
 
     public Variable(String name) {
-        if (name.length() == 0)
+        if (name.isBlank())
             throw new IllegalArgumentException("Created a variable with an empty name.");
         for (char c : name.toCharArray())
             if (!Character.isLetterOrDigit(c)) {

@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class Lambda implements Expression {
 
-    private final Pattern lastNumberSplit = Pattern.compile("(?<!\\d)(?=\\d*$)");
+    private static final Pattern lastNumberSplit = Pattern.compile("(?<!\\d)(?=\\d*$)");
     protected final Variable boundVariable;
     protected final Expression innerExpression;
 
