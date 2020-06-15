@@ -34,8 +34,11 @@ public class CoreTest {
     }
 
     @Test
-    public void manualBool() {
+    public void manualLogic() {
         Expression TRUE=new Lambda(new Variable("x"), new Lambda(new Variable("y"), new Variable("x")));
         Expression FALSE=new Lambda(new Variable("x"), new Lambda(new Variable("y"), new Variable("y")));
+        Expression AND=new Lambda(new Variable("p"), new Lambda(new Variable("q"), new Application(new Application(new Variable("p"), new Variable("q")), new Variable("p"))));
+        Expression OR=new Lambda(new Variable("p"), new Lambda(new Variable("q"), new Application(new Application(new Variable("p"), new Variable("p")), new Variable("q"))));
+        Expression NOT=new Lambda(new Variable("p"), new Application(new Application(new Variable("p"), FALSE), TRUE));
     }
 }
