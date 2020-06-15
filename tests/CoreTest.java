@@ -33,4 +33,9 @@ public class CoreTest {
         Expression pred = new Lambda(new Variable("n"), new Lambda(new Variable("f"), new Lambda(new Variable("x"), new Application( new Application(new Lambda(new Variable("g"), new Lambda(new Variable("h"), new Application(new Variable("h"), new Application(new Variable("g"), new Variable("f"))))), new Lambda(new Variable("u"), new Variable("x"))), new Lambda(new Variable("u"), new Variable("u"))))));
     }
 
+    @Test
+    public void manualBool() {
+        Expression TRUE=new Lambda(new Variable("x"), new Lambda(new Variable("y"), new Variable("x")));
+        Expression FALSE=new Lambda(new Variable("x"), new Lambda(new Variable("y"), new Variable("y")));
+    }
 }
