@@ -25,7 +25,9 @@ public class Application implements Expression {
 
     public Expression executeAll() {
         if (left instanceof Lambda lambda) {
-            return lambda.executeWith(right).executeAll();
+            return lambda.executeWith(right)
+//                    .executeAll()
+                    ;
         } else {
 //            Application current = new Application(left.executeAll(), right);
 //            Expression executed = current.execute();
@@ -35,18 +37,18 @@ public class Application implements Expression {
 //                return executed.executeAll();
 //            return new Application(left.executeAll(), right.executeAll()).execute();
 //            return new Application(left.executeAll(), right).execute();
-            return null;
-        }
-    }
-
-    public Expression execute() { // TODO this is also a janky fix
-        if (left instanceof Lambda lambda) {
-            return lambda.executeWith(right)
-                    ;
-        } else {
             return this;
         }
     }
+
+//    public Expression execute() { // TODO this is also a janky fix
+//        if (left instanceof Lambda lambda) {
+//            return lambda.executeWith(right)
+//                    ;
+//        } else {
+//            return this;
+//        }
+//    }
 
     public boolean equals(Object that) {
         if (that instanceof Application application)

@@ -169,7 +169,7 @@ public class ParsingTest {
                 exitR
                 """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
-        assertEquals("(y (λx.x))", list.getFirst().toString());
+        assertEquals("(y (λx1.x1))", list.getFirst().toString());
     }
 
     @Test
