@@ -18,14 +18,13 @@ public class CoreTest {
 	@Test
 	public void manual1() {
 		Expression e0 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), new Variable("b")));
-		Expression e1 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), (new Variable("a"), new Variable("b"))));
-		Expression e2 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), (new Variable("a"), (new Variable("a"), new Variable("b"))));
-		Expression e3 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), (new Variable("a")(new Variable("a"), new Variable("b")))));
+		Expression e1 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), new Application(new Variable("a"), new Variable("b"))));
+		Expression e2 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), new Application(new Variable("a"), new Application(new Variable("a"), new Variable("b")))));
+		Expression e3 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), new Application(new Variable("a"), new Application(new Variable("a"), new Variable("b")))));
 	}
 
 	@Test
 	public void manualSucc() {
-		Expression succ=new Lambda(new Variable("n"), new Lambda(new Variable("a"), new Lambda(new Variable("b"), (new Variable("a"),(new Variable("n"), new Variable("a"), new Variable(("x")))));
-
+		Expression succ=new Lambda(new Variable("n"), new Lambda(new Variable("a"), new Lambda(new Variable("b"), new Application(new Variable("a"), new Application(new Variable("n"), new Application(new Variable("a"), new Variable(("x"))))))));
 	}
 }
