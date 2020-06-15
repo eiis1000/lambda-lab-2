@@ -211,6 +211,60 @@ public class ParsingTest {
     }
 
     @Test
+    public void recTestN() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                0 = \\a.\\b.b
+                succ = \\c.\\d.\\e.d(c d e)
+                1 = run succ 0
+                2 = run succ 1
+                3 = run succ 2
+                true = \\f.\\g.f
+                false = \\h.\\i.i
+                zero? = \\j.j(\\k.false) true
+                if = \\P.\\T.\\F.(P T) F
+                pred = \\m\\n\\o.m (\\p\\q.q (p n)) (\\r.o) (\\s.s)
+                Y = \\t.(\\u.t(u u)) (\\v.(t(v v)))
+                TEST = Y \\w.\\x 0
+                ;factorial = Y \\y.\\z.(if (zero? z) 1 (* z (y (pred z))))
+                run TEST 0
+                run TEST 1
+                run TEST 2
+                exit
+                 """.getBytes()), list::add, new HashMap<>());
+        assertEquals("(λa1.(λb1.b1))", list.pop().toString());
+        assertEquals("(λa1.(λb1.b1))", list.pop().toString());
+        assertEquals("(λa1.(λb1.b1))", list.pop().toString());
+    }
+
+    @Test
+    public void recTestN2() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                0 = \\a.\\b.b
+                succ = \\c.\\d.\\e.d(c d e)
+                1 = run succ 0
+                2 = run succ 1
+                3 = run succ 2
+                true = \\f.\\g.f
+                false = \\h.\\i.i
+                zero? = \\j.j(\\k.false) true
+                if = \\P.\\T.\\F.(P T) F
+                pred = \\m\\n\\o.m (\\p\\q.q (p n)) (\\r.o) (\\s.s)
+                Y = \\t.(\\u.t(u u)) (\\v.(t(v v)))
+                TEST = Y \\w.\\x x
+                ;factorial = Y \\y.\\z.(if (zero? z) 1 (* z (y (pred z))))
+                run TEST 0
+                run TEST 1
+                run TEST 2
+                exit
+                 """.getBytes()), list::add, new HashMap<>());
+        assertEquals("(λa.(λb.b))", list.pop().toString());
+        assertEquals("(λd.(λe.(d e)))", list.pop().toString());
+        assertEquals("(λd1.(λe1.(d1 (d1 e1))))", list.pop().toString());
+    }
+
+    @Test
     public void recTest0() {
         LinkedList<Expression> list = new LinkedList<>();
         CLI.runCLI(new ByteArrayInputStream("""
