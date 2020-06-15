@@ -195,7 +195,7 @@ public class ParsingTest {
     }
 
     @Test
-    public void recTest1() {
+    public void recTest0() {
         LinkedList<Expression> list = new LinkedList<>();
         CLI.runCLI(new ByteArrayInputStream("""
                 0 = \\a.\\b.b
@@ -212,6 +212,52 @@ public class ParsingTest {
                 TEST = Y \\w.\\x(if (zero? x) 0 (w (pred x)))
                 ;factorial = Y \\y.\\z.(if (zero? z) 1 (* z (y (pred z))))
                 run TEST 0
+                exit
+                 """.getBytes()), list::add, new HashMap<>());
+        assertEquals("(λa2.(λb2.b2))", list.pop().toString());
+    }
+
+    @Test
+    public void recTest1() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                0 = \\a.\\b.b
+                succ = \\c.\\d.\\e.d(c d e)
+                1 = succ 0
+                2 = succ 1
+                3 = succ 2
+                true = \\f.\\g.f
+                false = \\h.\\i.i
+                zero? = \\j.j(\\k.false) true
+                if = \\P.\\T.\\F.(P T) F
+                pred = \\m\\n\\o.m (\\p\\q.q (p n)) (\\r.o) (\\s.s)
+                Y = \\t.(\\u.t(u u)) (\\v.(t(v v)))
+                TEST = Y \\w.\\x(if (zero? x) 0 (w (pred x)))
+                ;factorial = Y \\y.\\z.(if (zero? z) 1 (* z (y (pred z))))
+                run TEST 1
+                exit
+                 """.getBytes()), list::add, new HashMap<>());
+        assertEquals("(λa2.(λb2.b2))", list.pop().toString());
+    }
+
+    @Test
+    public void recTest2() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                0 = \\a.\\b.b
+                succ = \\c.\\d.\\e.d(c d e)
+                1 = succ 0
+                2 = succ 1
+                3 = succ 2
+                true = \\f.\\g.f
+                false = \\h.\\i.i
+                zero? = \\j.j(\\k.false) true
+                if = \\P.\\T.\\F.(P T) F
+                pred = \\m\\n\\o.m (\\p\\q.q (p n)) (\\r.o) (\\s.s)
+                Y = \\t.(\\u.t(u u)) (\\v.(t(v v)))
+                TEST = Y \\w.\\x(if (zero? x) 0 (w (pred x)))
+                ;factorial = Y \\y.\\z.(if (zero? z) 1 (* z (y (pred z))))
+                run TEST 2
                 exit
                  """.getBytes()), list::add, new HashMap<>());
         assertEquals("(λa2.(λb2.b2))", list.pop().toString());

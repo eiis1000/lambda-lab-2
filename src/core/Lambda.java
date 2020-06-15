@@ -16,7 +16,9 @@ public class Lambda implements Expression {
     }
 
     public Expression executeWith(Expression toSubstitute) {
-        return innerExpression.substitute(boundVariable, toSubstitute)
+        return innerExpression.substitute(boundVariable, toSubstitute
+//                .executeAll()
+        )
                 .executeAll()
                 ;
     }
