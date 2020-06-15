@@ -191,7 +191,7 @@ public class ParsingTest {
                  exit
                  """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
-        assertEquals("(λx1.(x1 (x x)))", list.getFirst().toString());
+        assertEquals("(λd.(e (d e)))", list.getFirst().toString());
     }
 
     @Test
@@ -200,9 +200,9 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 0 = \\a.\\b.b
                 succ = \\c.\\d.\\e.d(c d e)
-                1 = succ 0
-                2 = succ 1
-                3 = succ 2
+                1 = run succ 0
+                2 = run succ 1
+                3 = run succ 2
                 1
                 exit
                  """.getBytes()), list::add, new HashMap<>());
@@ -216,9 +216,9 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 0 = \\a.\\b.b
                 succ = \\c.\\d.\\e.d(c d e)
-                1 = succ 0
-                2 = succ 1
-                3 = succ 2
+                1 = run succ 0
+                2 = run succ 1
+                3 = run succ 2
                 true = \\f.\\g.f
                 false = \\h.\\i.i
                 zero? = \\j.j(\\k.false) true
@@ -239,9 +239,9 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 0 = \\a.\\b.b
                 succ = \\c.\\d.\\e.d(c d e)
-                1 = succ 0
-                2 = succ 1
-                3 = succ 2
+                1 = run succ 0
+                2 = run succ 1
+                3 = run succ 2
                 true = \\f.\\g.f
                 false = \\h.\\i.i
                 zero? = \\j.j(\\k.false) true
@@ -262,9 +262,9 @@ public class ParsingTest {
         CLI.runCLI(new ByteArrayInputStream("""
                 0 = \\a.\\b.b
                 succ = \\c.\\d.\\e.d(c d e)
-                1 = succ 0
-                2 = succ 1
-                3 = succ 2
+                1 = run succ 0
+                2 = run succ 1
+                3 = run succ 2
                 true = \\f.\\g.f
                 false = \\h.\\i.i
                 zero? = \\j.j(\\k.false) true
