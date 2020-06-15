@@ -25,6 +25,8 @@ public class CoreTest {
 
 	@Test
 	public void manualSucc() {
-		Expression succ=new Lambda(new Variable("n"), new Lambda(new Variable("a"), new Lambda(new Variable("b"), new Application(new Variable("a"), new Application(new Variable("n"), new Application(new Variable("a"), new Variable(("x"))))))));
+		Expression succ = new Lambda(new Variable("n"), new Lambda(new Variable("a"), new Lambda(new Variable("b"), new Application(new Variable("a"), new Application(new Application(new Variable("n"), new Variable("a")), new Variable(("x")))))));
 	}
+
+
 }
