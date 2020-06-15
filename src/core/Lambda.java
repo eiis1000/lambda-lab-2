@@ -52,7 +52,6 @@ public class Lambda implements Expression {
 
     public Expression executeAll() {
         return new Lambda(boundVariable, innerExpression
-                .executeAll()
         );
     }
 

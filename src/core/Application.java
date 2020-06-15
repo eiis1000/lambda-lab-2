@@ -33,15 +33,15 @@ public class Application implements Expression {
 //                return new Application(current.left, current.right.executeAll());
 //            else
 //                return executed.executeAll();
-            return new Application(left.executeAll(), right.executeAll()).execute();
+//            return new Application(left.executeAll(), right.executeAll()).execute();
 //            return new Application(left.executeAll(), right).execute();
+            return null;
         }
     }
 
     public Expression execute() { // TODO this is also a janky fix
         if (left instanceof Lambda lambda) {
             return lambda.executeWith(right)
-                    .executeAll()
                     ;
         } else {
             return this;
