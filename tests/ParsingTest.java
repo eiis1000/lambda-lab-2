@@ -195,6 +195,22 @@ public class ParsingTest {
     }
 
     @Test
+    public void CLITest9() {
+        LinkedList<Expression> list = new LinkedList<>();
+        CLI.runCLI(new ByteArrayInputStream("""
+                0 = \\a.\\b.b
+                succ = \\c.\\d.\\e.d(c d e)
+                1 = succ 0
+                2 = succ 1
+                3 = succ 2
+                1
+                exit
+                 """.getBytes()), list::add, new HashMap<>());
+        assertEquals(1, list.size());
+        assertEquals("(λx1.(λx.(x1 x)))", list.getFirst().toString());
+    }
+
+    @Test
     public void recTest0() {
         LinkedList<Expression> list = new LinkedList<>();
         CLI.runCLI(new ByteArrayInputStream("""
