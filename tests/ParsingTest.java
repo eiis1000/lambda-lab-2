@@ -212,6 +212,7 @@ public class ParsingTest {
                 TEST = Y \\w.\\x(if (zero? x) 0 (w (pred x)))
                 ;factorial = Y \\y.\\z.(if (zero? z) 1 (* z (y (pred z))))
                 run TEST 0
+                exit
                  """.getBytes()), list::add, new HashMap<>());
         assertEquals("(λf.(x x))", list.pop().toString());
     }

@@ -13,7 +13,9 @@ public class Application implements Expression {
     }
 
     public Expression substitute(Variable variable, Expression expression) {
-        return new Application(left.substitute(variable, expression), right.substitute(variable, expression)).execute();
+        return new Application(left.substitute(variable, expression), right.substitute(variable, expression))
+//                .execute()
+                ;
     }
 
     public void getAllVariables(Set<Variable> variables) {
@@ -25,13 +27,22 @@ public class Application implements Expression {
         if (left instanceof Lambda lambda) {
             return lambda.executeWith(right).executeAll();
         } else {
+//            Application current = new Application(left.executeAll(), right);
+//            Expression executed = current.execute();
+//            if (executed instanceof Application)
+//                return new Application(current.left, current.right.executeAll());
+//            else
+//                return executed.executeAll();
             return new Application(left.executeAll(), right.executeAll()).execute();
+//            return new Application(left.executeAll(), right).execute();
         }
     }
 
     public Expression execute() { // TODO this is also a janky fix
         if (left instanceof Lambda lambda) {
-            return lambda.executeWith(right).executeAll();
+            return lambda.executeWith(right)
+                    .executeAll()
+                    ;
         } else {
             return this;
         }
