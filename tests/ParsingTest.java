@@ -337,7 +337,7 @@ public class ParsingTest {
                 ; run factorial 3
                 ; run + 2 (factorial 3)
                 ; run (/ (* 3 6) 2)
-                run TEST 0
+                run factorial 1
                 exit
                  """.getBytes()), list::add, new HashMap<>());
         assertEquals("(λa2.(λb2.(a2 b2)))", list.pop().toString());
@@ -400,7 +400,7 @@ public class ParsingTest {
                 ; run factorial 3
                 ; run + 2 (factorial 3)
                 ; run (/ (* 3 6) 2)
-                run TEST 0
+                run factorial 2
                 exit
                  """.getBytes()), list::add, new HashMap<>());
         assertEquals("(λa2.(λb2.(a2 (a2 b2))))", list.pop().toString());
@@ -463,7 +463,7 @@ public class ParsingTest {
                 ; run factorial 3
                 ; run + 2 (factorial 3)
                 ; run (/ (* 3 6) 2)
-                run TEST 0
+                run factorial 3
                 exit
                  """.getBytes()), list::add, new HashMap<>());
         assertEquals("(λa2.(λb2.(a2 (a2 (a2 (a2 (a2 (a2 (b2)))))))))", list.pop().toString());
