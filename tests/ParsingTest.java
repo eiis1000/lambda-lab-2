@@ -207,7 +207,7 @@ public class ParsingTest {
                 exit
                  """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
-        assertEquals("(λd.(e (d e)))", list.getFirst().toString());
+        assertEquals("(λd.(λe.(d e)))", list.getFirst().toString());
     }
 
     @Test
