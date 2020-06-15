@@ -56,7 +56,7 @@ public class Lambda implements Expression {
 
     public Expression executeAll() {
         return new Lambda(boundVariable, innerExpression
-                .executeAll() // FIND 1
+//                .executeAll() // FIND 1
         );
     }
 
