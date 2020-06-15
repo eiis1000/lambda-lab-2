@@ -19,7 +19,7 @@ public class Lambda implements Expression {
         return innerExpression.substitute(boundVariable, toSubstitute
 //                .executeAll()
         )
-                .executeAll()
+//                .executeAll() // FIND 3
                 ;
     }
 
@@ -56,7 +56,7 @@ public class Lambda implements Expression {
 
     public Expression executeAll() {
         return new Lambda(boundVariable, innerExpression
-//                .executeAll()
+                .executeAll() // FIND 1
         );
     }
 

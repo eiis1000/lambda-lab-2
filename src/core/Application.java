@@ -24,12 +24,19 @@ public class Application implements Expression {
     }
 
     public Expression executeAll() {
+        if (left instanceof Lambda lambda) {
+            System.out.println(lambda + ",   " + right + "\n");
+            return lambda.executeWith(right)
+                    .executeAll() // FIND 4
+                    ;
+        }
         Application cur = new Application(left.executeAll(), right);
         if (cur.left instanceof Lambda lambda) {
+            System.out.println(lambda + ",   " + right);
             return lambda.executeWith(right)
-//                    .executeAll()
+                    .executeAll() // FIND 2
                     ;
-        } else {
+        }
 //            Application current = new Application(left.executeAll(), right);
 //            Expression executed = current.execute();
 //            if (executed instanceof Application)
@@ -38,8 +45,7 @@ public class Application implements Expression {
 //                return executed.executeAll();
 //            return new Application(left.executeAll(), right.executeAll()).execute();
 //            return new Application(left.executeAll(), right).execute();
-            return cur;
-        }
+        return new Application(cur.left, right.executeAll());
     }
 
 //    public Expression execute() { // TODO this is also a janky fix
