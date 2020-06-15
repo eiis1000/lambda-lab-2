@@ -18,5 +18,8 @@ public class CoreTest {
 	@Test
 	public void manual1() {
 		Expression e0 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), new Variable("b")));
+		Expression e1 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), (new Variable("a"), new Variable("b"))));
+		Expression e2 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), (new Variable("a"), (new Variable("a"), new Variable("b"))));
+		Expression e3 = new Lambda(new Variable("a"), new Lambda(new Variable("b"), (new Variable("a")(new Variable("a"), new Variable("b")))));
 	}
 }
