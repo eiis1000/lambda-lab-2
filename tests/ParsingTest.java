@@ -214,6 +214,6 @@ public class ParsingTest {
                 run TEST 0
                 exit
                  """.getBytes()), list::add, new HashMap<>());
-        assertEquals("(λf.(x x))", list.pop().toString());
+        assertEquals("(λa2.(λb2.b2))", list.pop().toString());
     }
 }

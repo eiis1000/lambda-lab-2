@@ -24,7 +24,8 @@ public class Application implements Expression {
     }
 
     public Expression executeAll() {
-        if (left instanceof Lambda lambda) {
+        Application cur = new Application(left.executeAll(), right);
+        if (cur.left instanceof Lambda lambda) {
             return lambda.executeWith(right)
 //                    .executeAll()
                     ;
@@ -37,7 +38,7 @@ public class Application implements Expression {
 //                return executed.executeAll();
 //            return new Application(left.executeAll(), right.executeAll()).execute();
 //            return new Application(left.executeAll(), right).execute();
-            return this;
+            return cur;
         }
     }
 
