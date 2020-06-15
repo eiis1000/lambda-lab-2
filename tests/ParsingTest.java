@@ -191,7 +191,7 @@ public class ParsingTest {
                  exit
                  """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
-        assertEquals("(λd.(e (d e)))", list.getFirst().toString());
+        assertEquals("(λx1.(x1 (x x)))", list.getFirst().toString());
     }
 
     @Test
@@ -207,7 +207,7 @@ public class ParsingTest {
                 exit
                  """.getBytes()), list::add, new HashMap<>());
         assertEquals(1, list.size());
-        assertEquals("(λx1.(λx.(x1 x)))", list.getFirst().toString());
+        assertEquals("(λd.(e (d e)))", list.getFirst().toString());
     }
 
     @Test
