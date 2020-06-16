@@ -21,6 +21,7 @@ public class CoreTest {
     Expression IF = new Lambda(new Variable("p"), new Lambda(new Variable("t"), new Lambda(new Variable("f"), new Application(new Application(new Variable("p"), new Variable("t")), new Variable("f")))));
     Expression Y = new Lambda(new Variable("f"), new Application(new Lambda(new Variable("x"), new Application(new Variable("f"), new Application(new Variable("x"), new Variable("x")))), new Lambda(new Variable("x"), new Application(new Variable("f"), new Application(new Variable("x"), new Variable("x"))))));
     Expression ZERO = new Lambda(new Variable("j"), new Application(new Application(new Variable("j"), new Lambda(new Variable("k"), FALSE)), TRUE));
+    Expression MULT = new Lambda(new Variable("m"), new Lambda(new Variable("n"), new Lambda(new Variable("f"), new Application(new Variable("m"), new Application(new Variable("n"), new Variable("f"))))));
 
     @Test
     public void toStringTest() {
@@ -47,5 +48,14 @@ public class CoreTest {
         assertEquals("(λf3.(λx4.x4))", new Application(TEST, e0).executeAll().toString());
         assertEquals("(λf4.(λx5.x5))", new Application(TEST, e1).executeAll().toString());
         assertEquals("(λf4.(λx5.x5))", new Application(TEST, e2).executeAll().toString());
+    }
+
+    @Test
+    public void manualFactorial() {
+        //;factorial = Y \y.\z.(((if (zero? z)) 1) (* z (y (pred z))))
+        Expression factorial = new Application(Y, new Lambda(new Variable("y"), new Lambda(new Variable("z"), new Application(new Application(new Application(IF, new Application(ZERO, new Variable("z"))), e1), new Application(new Application(MULT, new Variable("z")), new Application(new Variable("y"), new Application(pred, new Variable("z"))))))));
+        assertEquals("(λf3.(λx3.(f3 x3)))", new Application(factorial, e0).executeAll().toString());
+        assertEquals("(λf4.(λx4.(f4 x4)))", new Application(factorial, e1).executeAll().toString());
+        assertEquals("(λf4.(λx4.(f4 (f4 x4))))", new Application(factorial, e2).executeAll().toString());
     }
 }
