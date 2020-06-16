@@ -37,11 +37,14 @@ public class CoreTest {
 
     @Test
     public void manualPred() {
-        assertEquals("λf.(λx.x)", new Application(pred, e1).executeAll().toString());
+        assertEquals("(λf.(λx.x))", new Application(pred, e1).executeAll().toString());
+        assertEquals("(λf.(λx.(f x)))", new Application(pred, e2).executeAll().toString());
     }
 
     @Test
     public void manualTest() {
         Expression TEST = new Application(Y, new Lambda(new Variable("w"), new Lambda(new Variable("x"), new Application(new Application(new Application(IF, new Application(ZERO, new Variable("x"))), e0), new Application(new Variable("w"), new Application(pred, new Variable("x")))))));
+        assertEquals("(λf3.(λx4.x4))", new Application(TEST, e0).executeAll().toString());
+        assertEquals("(d.(λe.(d e)))", new Application(TEST, e1).executeAll().toString());
     }
 }
