@@ -1,6 +1,7 @@
 package parsing;
 
 import core.Expression;
+import core.SubstitutionWrapper;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -48,9 +49,12 @@ public class CLI {
 
 	public static Expression parseInput(String input, Map<String, Expression> definedExpressions) {
 		String[] spaceSplit = input.split("\\s+", 2);
-		if ("run".equals(spaceSplit[0].strip()))
-			return parseInput(spaceSplit[1].strip(), definedExpressions).executeAll();
-		else
+		if ("run".equals(spaceSplit[0].strip())) {
+			SubstitutionWrapper current = parseInput(spaceSplit[1].strip(), definedExpressions).executeAll();
+			while (current.isUpdated)
+				current = current.expression.executeAll();
+			return current.expression;
+		} else
 			return LambdaParser.parseExpression(input, definedExpressions);
 	}
 }

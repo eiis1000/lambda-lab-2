@@ -5,7 +5,7 @@ import java.util.Set;
 public interface Expression {
 	Expression substitute(Variable variable, Expression expression);
 
-	Expression executeAll();
+	SubstitutionWrapper executeAll();
 
 	void getAllVariables(Set<Variable> variables);
 }

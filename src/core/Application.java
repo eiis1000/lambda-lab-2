@@ -23,39 +23,18 @@ public class Application implements Expression {
         right.getAllVariables(variables);
     }
 
-    public Expression executeAll() {
-        if (left instanceof Lambda lambda) {
-            System.out.println(lambda + ",   " + right + "\n");
-            return lambda.executeWith(right)
-                    .executeAll() // FIND 4
-                    ;
-        }
-        Application cur = new Application(left.executeAll(), right);
-        if (cur.left instanceof Lambda lambda) {
-            System.out.println(lambda + ",   " + right);
-            return lambda.executeWith(right)
-                    .executeAll() // FIND 2
-                    ;
-        }
-//            Application current = new Application(left.executeAll(), right);
-//            Expression executed = current.execute();
-//            if (executed instanceof Application)
-//                return new Application(current.left, current.right.executeAll());
-//            else
-//                return executed.executeAll();
-//            return new Application(left.executeAll(), right.executeAll()).execute();
-//            return new Application(left.executeAll(), right).execute();
-        return new Application(cur.left, right.executeAll());
+    public SubstitutionWrapper executeAll() {
+        if (left instanceof Lambda lambda)
+            return lambda.executeWith(right);
+        SubstitutionWrapper leftWrapper = left.executeAll();
+        if (leftWrapper.isUpdated)
+            return new SubstitutionWrapper(true, new Application(leftWrapper.expression, right));
+        SubstitutionWrapper rightWrapper = right.executeAll();
+        if (rightWrapper.isUpdated)
+            return new SubstitutionWrapper(true, new Application(left, rightWrapper.expression));
+        return new SubstitutionWrapper(false, new Application(left, right)); // TODO return this?
     }
 
-//    public Expression execute() { // TODO this is also a janky fix
-//        if (left instanceof Lambda lambda) {
-//            return lambda.executeWith(right)
-//                    ;
-//        } else {
-//            return this;
-//        }
-//    }
 
     public boolean equals(Object that) {
         if (that instanceof Application application)

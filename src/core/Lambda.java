@@ -15,12 +15,8 @@ public class Lambda implements Expression {
         this.innerExpression = innerExpression;
     }
 
-    public Expression executeWith(Expression toSubstitute) {
-        return innerExpression.substitute(boundVariable, toSubstitute
-//                .executeAll()
-        )
-//                .executeAll() // FIND 3
-                ;
+    public SubstitutionWrapper executeWith(Expression toSubstitute) {
+        return new SubstitutionWrapper(true, innerExpression.substitute(boundVariable, toSubstitute));
     }
 
     public Expression substitute(Variable variable, Expression expression) {
@@ -30,8 +26,9 @@ public class Lambda implements Expression {
             return alphaConvert().substitute(variable, expression);
         if (variable.equals(boundVariable))
             return alphaConvert().substitute(variable, expression);
-        else
+        else {
             return new Lambda(boundVariable, innerExpression.substitute(variable, expression));
+        }
     }
 
     public Lambda alphaConvert() {
@@ -54,10 +51,9 @@ public class Lambda implements Expression {
         innerExpression.getAllVariables(variables);
     }
 
-    public Expression executeAll() {
-        return new Lambda(boundVariable, innerExpression
-//                .executeAll() // FIND 1
-        );
+    public SubstitutionWrapper executeAll() {
+        SubstitutionWrapper wrapper = innerExpression.executeAll();
+        return new SubstitutionWrapper(wrapper.isUpdated, new Lambda(boundVariable, wrapper.expression));
     }
 
     public boolean equals(Object that) { // TODO \x.x and \y.y

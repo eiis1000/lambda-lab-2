@@ -27,8 +27,8 @@ public class Variable implements Expression {
         variables.add(this);
     }
 
-    public Expression executeAll() {
-        return this;
+    public SubstitutionWrapper executeAll() {
+        return new SubstitutionWrapper(false, this);
     }
 
     public boolean equals(Object that) {
