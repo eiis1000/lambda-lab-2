@@ -45,7 +45,7 @@ public class CoreTest {
     public void manualTest() {
         Expression TEST = new Application(Y, new Lambda(new Variable("w"), new Lambda(new Variable("x"), new Application(new Application(new Application(IF, new Application(ZERO, new Variable("x"))), e0), new Application(new Variable("w"), new Application(pred, new Variable("x")))))));
         assertEquals("(λf3.(λx4.x4))", new Application(TEST, e0).executeAll().toString());
-        assertEquals("(d.(λe.(d e)))", new Application(TEST, e1).executeAll().toString());
-        assertEquals("(λd1.(λe1.(d1 (d1 e1))))", new Application(TEST, e2).executeAll().toString());
+        assertEquals("(λf4.(λx5.x5))", new Application(TEST, e1).executeAll().toString());
+        assertEquals("(λf4.(λx5.x5))", new Application(TEST, e2).executeAll().toString());
     }
 }
