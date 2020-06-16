@@ -1,9 +1,9 @@
 package parsing;
 
-import core.Expression;
-import core.SubstitutionWrapper;
+import core.*;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -41,7 +41,12 @@ public class CLI {
 				Expression parsed = parseInput(tokens[1], definedExpressions);
 				definedExpressions.put(tokens[0], parsed);
 				System.out.println("Added " + parsed + " as " + tokens[0]);
-			} else
+			}  else if (input.length() > 8 && "populate".equals(input.substring(0, 8))) {
+				int[] ints = Arrays.stream(input.substring(9).split("\\s+")).mapToInt(Integer::parseInt).toArray();
+				for (int i = ints[0]; i <= ints[1]; i++)
+					createNumeral(i, definedExpressions);
+				System.out.println("Populated numbers " + ints[0] + " to " + ints[1]);
+			}else
 				output.accept(parseInput(input, definedExpressions));
 		}
 		System.out.println("Goodbye!");
@@ -57,4 +62,15 @@ public class CLI {
 		} else
 			return LambdaParser.parseExpression(input, definedExpressions);
 	}
+
+	public static void createNumeral(int num, Map<String, Expression> definedExpressions) {
+		if (definedExpressions.containsKey(String.valueOf(num)))
+			System.out.println(num + " is already defined.");
+		Expression cur = new Variable("x");
+		Variable f = new Variable("f");
+		for (int i = 0; i < num; i++)
+			cur = new Application(f, cur);
+		definedExpressions.put(String.valueOf(num), new Lambda(new Variable("f"), new Lambda(new Variable("x"), cur)));
+	}
+
 }
