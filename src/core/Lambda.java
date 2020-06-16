@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 public class Lambda implements Expression {
 
     private static final Pattern lastNumberSplit = Pattern.compile("(?<!\\d)(?=\\d*$)");
+    private Set<Variable> vars = null;
     protected final Variable boundVariable;
     protected final Expression innerExpression;
 
@@ -20,9 +21,11 @@ public class Lambda implements Expression {
     }
 
     public Expression substitute(Variable variable, Expression expression) {
-        Set<Variable> toSubstituteVars = new HashSet<>();
-        expression.getAllVariables(toSubstituteVars); // TODO doing this each time is inefficient
-        if (toSubstituteVars.contains(boundVariable))
+        if (vars == null) {
+            vars = new HashSet<>();
+            expression.getAllVariables(vars);
+        }
+        if (vars.contains(boundVariable))
             return alphaConvert().substitute(variable, expression);
         if (variable.equals(boundVariable))
             return alphaConvert().substitute(variable, expression);

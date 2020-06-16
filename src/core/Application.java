@@ -32,7 +32,7 @@ public class Application implements Expression {
         SubstitutionWrapper rightWrapper = right.executeAll();
         if (rightWrapper.isUpdated)
             return new SubstitutionWrapper(true, new Application(left, rightWrapper.expression));
-        return new SubstitutionWrapper(false, new Application(left, right)); // TODO return this?
+        return new SubstitutionWrapper(false, this);
     }
 
 
