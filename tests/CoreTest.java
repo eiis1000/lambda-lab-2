@@ -1,7 +1,4 @@
-import core.Application;
-import core.Expression;
-import core.Lambda;
-import core.Variable;
+import core.*;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
@@ -23,6 +20,12 @@ public class CoreTest {
     Expression ZERO = new Lambda(new Variable("j"), new Application(new Application(new Variable("j"), new Lambda(new Variable("k"), FALSE)), TRUE));
     Expression MULT = new Lambda(new Variable("m"), new Lambda(new Variable("n"), new Lambda(new Variable("f"), new Application(new Variable("m"), new Application(new Variable("n"), new Variable("f"))))));
 
+    Expression update(SubstitutionWrapper cur) {
+        while(cur.isUpdated)
+            cur=cur.expression.executeAll();
+        return cur.expression;
+    }
+
     @Test
     public void toStringTest() {
         assertEquals("x", new Variable("x").toString());
@@ -32,30 +35,30 @@ public class CoreTest {
 
     @Test
     public void manualSucc() {
-        assertEquals("(λf.(λx.(f x)))", new Application(succ, e0).executeAll().expression);
-        assertEquals("(λf.(λx.(f (f x))))", new Application(succ, e1).executeAll().expression);
+        assertEquals("(λf1.(λx1.(f1 x1)))", update(new Application(succ, e0).executeAll()).toString());
+        assertEquals("(λf1.(λx1.(f1 (f1 x1))))", update(new Application(succ, e1).executeAll()).toString());
     }
 
     @Test
     public void manualPred() {
-        assertEquals("(λf.(λx.x))", new Application(pred, e1).executeAll().expression);
-        assertEquals("(λf.(λx.(f x)))", new Application(pred, e2).executeAll().expression);
+        assertEquals("(λf1.(λx1.x1))", update(new Application(pred, e1).executeAll()).toString());
+        assertEquals("(λf1.(λx1.(f1 x1)))", update(new Application(pred, e2).executeAll()).toString());
     }
 
     @Test
     public void manualTest() {
         Expression TEST = new Application(Y, new Lambda(new Variable("w"), new Lambda(new Variable("x"), new Application(new Application(new Application(IF, new Application(ZERO, new Variable("x"))), e0), new Application(new Variable("w"), new Application(pred, new Variable("x")))))));
-        assertEquals("(λf3.(λx4.x4))", new Application(TEST, e0).executeAll().expression);
-        assertEquals("(λf4.(λx5.x5))", new Application(TEST, e1).executeAll().expression);
-        assertEquals("(λf4.(λx5.x5))", new Application(TEST, e2).executeAll().expression);
+        assertEquals("(λf3.(λx4.x4))", update(new Application(TEST, e0).executeAll()).toString());
+        assertEquals("(λf4.(λx5.x5))", update(new Application(TEST, e1).executeAll()).toString());
+        assertEquals("(λf4.(λx5.x5))", update(new Application(TEST, e2).executeAll()).toString());
     }
 
     @Test
     public void manualFactorial() {
         //;factorial = Y \y.\z.(((if (zero? z)) 1) (* z (y (pred z))))
         Expression factorial = new Application(Y, new Lambda(new Variable("y"), new Lambda(new Variable("z"), new Application(new Application(new Application(IF, new Application(ZERO, new Variable("z"))), e1), new Application(new Application(MULT, new Variable("z")), new Application(new Variable("y"), new Application(pred, new Variable("z"))))))));
-        assertEquals("(λf3.(λx3.(f3 x3)))", new Application(factorial, e0).executeAll().expression);
-        assertEquals("(λf4.(λx4.(f4 x4)))", new Application(factorial, e1).executeAll().expression);
-        assertEquals("(λf4.(λx4.(f4 (f4 x4))))", new Application(factorial, e2).executeAll().expression);
+        assertEquals("(λf3.(λx3.(f3 x3)))", update(new Application(factorial, e0).executeAll()).toString());
+        assertEquals("(λf2.(λx3.(f2 x3)))", update(new Application(factorial, e1).executeAll()).toString());
+        assertEquals("(λf2.(λx3.(f2 (f2 x3))))", update(new Application(factorial, e2).executeAll()).toString());
     }
 }
