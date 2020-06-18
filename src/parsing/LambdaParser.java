@@ -37,7 +37,6 @@ public class LambdaParser {
 
 	public static  Expression parseToParen(Map<String, Expression> definedExpressions, boolean incrementOnEnd) {
 		boolean hasOne = false;
-//		int curExpStackSize = expressionStack.size();
 		while (i < tokens.size()) {
 			if (")".equals(tokens.get(i))) {
 				if (incrementOnEnd)
