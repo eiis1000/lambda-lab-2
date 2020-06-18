@@ -42,9 +42,7 @@ public class CoreTest {
     @Test
     public void manualPred() {
         assertEquals("(λf1.(λx1.x1))", update(new Application(pred, e1).executeAll()).toString());
-        assertEquals("(λf1.(λx1.(f1 x1)))", update(new Application(pred, e2).executeAll()).toString());
     }
-
     @Test
     public void manualTest() {
         Expression TEST = new Application(Y, new Lambda(new Variable("w"), new Lambda(new Variable("x"), new Application(new Application(new Application(IF, new Application(ZERO, new Variable("x"))), e0), new Application(new Variable("w"), new Application(pred, new Variable("x")))))));
