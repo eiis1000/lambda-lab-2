@@ -261,7 +261,7 @@ public class ParsingTest {
                  """.getBytes()), list::add, new HashMap<>());
         assertEquals("(λa.(λb.b))", list.pop().toString());
         assertEquals("(λd.(λe.(d e)))", list.pop().toString());
-        assertEquals("(λd1.(λe1.(d1 (d1 e1))))", list.pop().toString());
+        assertEquals("(λd.(λe.(d (d e))))", list.pop().toString());
     }
 
     @Test
@@ -307,7 +307,7 @@ public class ParsingTest {
                 run TEST 1
                 exit
                  """.getBytes()), list::add, new HashMap<>());
-        assertEquals("(λa2.(λb2.b2))", list.pop().toString());
+        assertEquals("(λa1.(λb1.b1))", list.pop().toString());
     }
 
     @Test
@@ -330,7 +330,7 @@ public class ParsingTest {
                 run TEST 2
                 exit
                  """.getBytes()), list::add, new HashMap<>());
-        assertEquals("(λa2.(λb2.b2))", list.pop().toString());
+        assertEquals("(λa1.(λb1.b1))", list.pop().toString());
     }
 
     @Test
@@ -393,7 +393,7 @@ public class ParsingTest {
                 run factorial 0
                 exit
                  """.getBytes()), list::add, new HashMap<>());
-        assertEquals("(λa2.(λb2.(a2 b2)))", list.pop().toString());
+        assertEquals("(λf4.(λx4.(f4 x4)))", list.pop().toString());
     }
 
     @Test
@@ -456,7 +456,7 @@ public class ParsingTest {
                 run factorial 1
                 exit
                  """.getBytes()), list::add, new HashMap<>());
-        assertEquals("(λa2.(λb2.(a2 b2)))", list.pop().toString());
+        assertEquals("(λf4.(λx4.(f4 x4)))", list.pop().toString());
     }
 
     @Test
@@ -519,7 +519,7 @@ public class ParsingTest {
                 run factorial 2
                 exit
                  """.getBytes()), list::add, new HashMap<>());
-        assertEquals("(λa2.(λb2.(a2 (a2 b2))))", list.pop().toString());
+        assertEquals("(λf4.(λx4.(f4 (f4 x4))))", list.pop().toString());
     }
 
     @Test
@@ -582,6 +582,6 @@ public class ParsingTest {
                 run factorial 3
                 exit
                  """.getBytes()), list::add, new HashMap<>());
-        assertEquals("(λa2.(λb2.(a2 (a2 (a2 (a2 (a2 (a2 (b2)))))))))", list.pop().toString());
+        assertEquals("(λf4.(λx4.(f4 (f4 (f4 (f4 (f4 (f4 x4))))))))", list.pop().toString());
     }
 }
