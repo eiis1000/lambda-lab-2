@@ -22,7 +22,7 @@ public class CoreTest {
 
     Expression update(SubstitutionWrapper cur) {
         while(cur.isUpdated)
-            cur=cur.expression.executeAll();
+            cur = cur.expression.executeAll();
         return cur.expression;
     }
 
@@ -53,7 +53,6 @@ public class CoreTest {
 
     @Test
     public void manualFactorial() {
-        //;factorial = Y \y.\z.(((if (zero? z)) 1) (* z (y (pred z))))
         Expression factorial = new Application(Y, new Lambda(new Variable("y"), new Lambda(new Variable("z"), new Application(new Application(new Application(IF, new Application(ZERO, new Variable("z"))), e1), new Application(new Application(MULT, new Variable("z")), new Application(new Variable("y"), new Application(pred, new Variable("z"))))))));
         assertEquals("(λf3.(λx3.(f3 x3)))", update(new Application(factorial, e0).executeAll()).toString());
         assertEquals("(λf2.(λx3.(f2 x3)))", update(new Application(factorial, e1).executeAll()).toString());
